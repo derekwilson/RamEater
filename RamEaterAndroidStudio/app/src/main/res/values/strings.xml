@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">RamEater</string>
+    <string name="placeholder">placeholder</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_stop_all">Stop All Services</string>
 
     <string name="service_started">RamEater Service started. Munch munch...</string>
     <string name="service_label">RamEater Service</string>

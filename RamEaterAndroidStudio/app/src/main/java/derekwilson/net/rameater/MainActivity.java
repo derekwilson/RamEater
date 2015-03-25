@@ -1,92 +1,75 @@
 package derekwilson.net.rameater;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     public class ServiceConfig {
+        public String DisplayName;
         public Intent StartIntent;
         public Class<?> ServiceClass;
     }
 
-    private ServiceConfig[] services;
+    private List<ServiceConfig> services;
+    private ServiceArrayAdapter adapter;
+    private ListView lvServices;
 
     private void initServices() {
-        services = new ServiceConfig[5];
+        services = new ArrayList<ServiceConfig>(5);
         for (int index=0; index<5; index++){
-            services[index] = new ServiceConfig();
+            ServiceConfig thisConfig = new ServiceConfig();
+            thisConfig.DisplayName = "Service " + (index + 1);
+            services.add(thisConfig);
         }
 
-        services[0].ServiceClass = Service1.class;
-        services[1].ServiceClass = Service2.class;
-        services[2].ServiceClass = Service3.class;
-        services[3].ServiceClass = Service4.class;
-        services[4].ServiceClass = Service5.class;
+        services.get(0).ServiceClass = Service1.class;
+        services.get(1).ServiceClass = Service2.class;
+        services.get(2).ServiceClass = Service3.class;
+        services.get(3).ServiceClass = Service4.class;
+        services.get(4).ServiceClass = Service5.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);
         }
     }
 
-    private void startOneService(int index) {
-        startService(services[index].StartIntent);
-    }
-
-    private void stopOneService(int index) {
-        stopService(services[index].StartIntent);
+    private void stopAllServices() {
+        for (ServiceConfig config : services){
+            stopService(config.StartIntent);
+        }
     }
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+        lvServices = (ListView) findViewById(R.id.lvServices);
         initServices();
+        adapter = new ServiceArrayAdapter(this,services);
+        lvServices.setAdapter(adapter);
 	}
 
 	@Override
 	public void onClick(View view) {
 		logMessage("OnClick");
-		switch (view.getId())
-		{
-			case R.id.btnStart1:
-                startOneService(0);
-				break;
-			case R.id.btnStop1:
-				stopOneService(0);
-				break;
-            case R.id.btnStart2:
-                startOneService(1);
-                break;
-            case R.id.btnStop2:
-                stopOneService(1);
-                break;
-            case R.id.btnStart3:
-                startOneService(2);
-                break;
-            case R.id.btnStop3:
-                stopOneService(2);
-                break;
-            case R.id.btnStart4:
-                startOneService(3);
-                break;
-            case R.id.btnStop4:
-                stopOneService(3);
-                break;
-            case R.id.btnStart5:
-                startOneService(4);
-                break;
-            case R.id.btnStop5:
-                stopOneService(4);
-                break;
-		}
 	}
 
 	@Override
@@ -103,13 +86,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_stop_all) {
+            stopAllServices();
 			return true;
 		}
 
@@ -119,4 +99,49 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 	private void logMessage(String message) {
 		Log.i("RamEater", message);
 	}
+
+    public class ServiceArrayAdapter extends ArrayAdapter<ServiceConfig> {
+        private final Context context;
+        private final List<ServiceConfig> values;
+
+        public ServiceArrayAdapter(Context context, List<ServiceConfig> serviceConfigs) {
+            super(context, R.layout.list_item_service, serviceConfigs);
+            this.context = context;
+            this.values = serviceConfigs;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View rowView = inflater.inflate(R.layout.list_item_service, parent, false);
+
+            final ServiceConfig thisService = values.get(position);
+
+            TextView label = (TextView) rowView.findViewById(R.id.service_row_label);
+            label.setText(thisService.DisplayName);
+
+            Button startButton = (Button) rowView.findViewById(R.id.btnStart);
+            startButton.setText("Start " + (position + 1));
+            startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startService(thisService.StartIntent);
+                }
+            });
+
+            Button stopButton = (Button) rowView.findViewById(R.id.btnStop);
+            stopButton.setText("Stop " + (position + 1));
+            stopButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    stopService(thisService.StartIntent);
+                }
+            });
+
+            return rowView;
+        }
+    }
 }
+
+
