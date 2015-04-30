@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.main.MainActivity"
             android:launchMode="singleTop"
             android:label="@string/app_name" >
             <intent-filter>
@@ -18,24 +18,28 @@
             </intent-filter>
         </activity>
         <service
-            android:name="Service1"
+            android:name=".services.Service1"
             android:process=":sp1">
         </service>
         <service
-            android:name="Service2"
+            android:name=".services.Service2"
             android:process=":sp2">
         </service>
         <service
-            android:name="Service3"
+            android:name=".services.Service3"
             android:process=":sp3">
         </service>
         <service
-            android:name="Service4"
+            android:name=".services.Service4"
             android:process=":sp4">
         </service>
         <service
-            android:name="Service5"
+            android:name=".services.Service5"
             android:process=":sp5">
+        </service>
+        <service
+            android:name=".services.Service6"
+            android:process=":sp6">
         </service>
     </application>
 

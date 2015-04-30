@@ -1,6 +1,5 @@
-package derekwilson.net.rameater;
+package derekwilson.net.rameater.activity.main;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -17,8 +16,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import derekwilson.net.rameater.R;
+import derekwilson.net.rameater.services.Service1;
+import derekwilson.net.rameater.services.Service2;
+import derekwilson.net.rameater.services.Service3;
+import derekwilson.net.rameater.services.Service4;
+import derekwilson.net.rameater.services.Service5;
+import derekwilson.net.rameater.services.Service6;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
@@ -28,13 +34,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         public Class<?> ServiceClass;
     }
 
+    private final int numberOfServices = 6;
+
     private List<ServiceConfig> services;
     private ServiceArrayAdapter adapter;
     private ListView lvServices;
 
     private void initServices() {
-        services = new ArrayList<ServiceConfig>(5);
-        for (int index=0; index<5; index++){
+        services = new ArrayList<ServiceConfig>(numberOfServices);
+        for (int index=0; index<numberOfServices; index++){
             ServiceConfig thisConfig = new ServiceConfig();
             thisConfig.DisplayName = "Service " + (index + 1);
             services.add(thisConfig);
@@ -45,6 +53,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         services.get(2).ServiceClass = Service3.class;
         services.get(3).ServiceClass = Service4.class;
         services.get(4).ServiceClass = Service5.class;
+        services.get(5).ServiceClass = Service6.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);

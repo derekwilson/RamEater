@@ -1,4 +1,4 @@
-package derekwilson.net.rameater;
+package derekwilson.net.rameater.services;
 
 import android.app.ActivityManager;
 import android.app.NotificationManager;
@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import derekwilson.net.rameater.activity.main.MainActivity;
+import derekwilson.net.rameater.R;
 
 public abstract class EaterService extends Service {
 	protected abstract int getServiceId();
