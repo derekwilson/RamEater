@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prefs_memory_entries">
+        <item>Auto (Android 3+)</item>
+        <item>900 MB</item>
+        <item>800 MB</item>
+        <item>700 MB</item>
+        <item>600 MB</item>
+        <item>500 MB</item>
+        <item>400 MB</item>
+        <item>300 MB</item>
+        <item>200 MB</item>
+        <item>100 MB</item>
+    </string-array>
+    <string-array name="prefs_memory_values">
+        <item>0</item>
+        <item>900</item>
+        <item>800</item>
+        <item>700</item>
+        <item>600</item>
+        <item>500</item>
+        <item>400</item>
+        <item>300</item>
+        <item>200</item>
+        <item>100</item>
+    </string-array>
+</resources>

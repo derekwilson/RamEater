@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import derekwilson.net.rameater.R;
+import derekwilson.net.rameater.activity.settings.SettingsActivity;
 import derekwilson.net.rameater.services.Service1;
 import derekwilson.net.rameater.services.Service2;
 import derekwilson.net.rameater.services.Service3;
@@ -97,10 +98,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 
-		if (id == R.id.action_stop_all) {
-            stopAllServices();
-			return true;
-		}
+        switch (id) {
+            case R.id.action_stop_all:
+                stopAllServices();
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+        }
 
 		return super.onOptionsItemSelected(item);
 	}

@@ -11,6 +11,8 @@ import android.util.Log;
 
 import derekwilson.net.rameater.activity.main.MainActivity;
 import derekwilson.net.rameater.R;
+import derekwilson.net.rameater.activity.settings.IPreferencesHelper;
+import derekwilson.net.rameater.activity.settings.PreferencesHelper;
 
 public abstract class EaterService extends Service {
 	protected abstract int getServiceId();
@@ -22,6 +24,8 @@ public abstract class EaterService extends Service {
 
 	private char[] memoryBlackHole = null;
 
+    private IPreferencesHelper preferences;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -30,7 +34,11 @@ public abstract class EaterService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		logMessage("Received start id " + startId + ": " + intent);
-		startForeground(getServiceId(), notificationBuilder.build());
+
+        // inject
+        preferences = new PreferencesHelper(getBaseContext());
+
+        startForeground(getServiceId(), notificationBuilder.build());
 		eatAllMemory();
 
 		// We want this service to continue running until it is explicitly
@@ -63,10 +71,17 @@ public abstract class EaterService extends Service {
 	}
 
 	private void eatAllMemory() {
-		//Get amount of memory this app is allowed to use (in MBs)
-		int availMem = activityManager.getLargeMemoryClass();
-		logMessage("available memory MB = " + availMem);
-		eatMemory(availMem);
+        int max = preferences.getMaxMemoryMb();
+        if (max == 0) {
+            //Get amount of memory this app is allowed to use (in MBs)
+            int availMem = activityManager.getLargeMemoryClass();
+            logMessage("available memory MB = " + availMem);
+            max = availMem;
+        }
+        else {
+            logMessage("preferences max MB = " + max);
+        }
+        eatMemory(max);
 	}
 
 	private void eatMemory(int numberOfMb) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Service">
+
+        <ListPreference
+            android:key="@string/pref_key_max_memory_mb"
+            android:title="Memory per Service"
+            android:summary="@string/placeholder"
+            android:entries="@array/prefs_memory_entries"
+            android:entryValues="@array/prefs_memory_values" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About">
+
+        <Preference
+            android:key="@string/pref_key_version"
+            android:title="Build Version" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

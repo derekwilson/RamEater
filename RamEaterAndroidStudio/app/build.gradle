@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
-        minSdkVersion 11
+        minSdkVersion 7
         targetSdkVersion 21
         versionCode 5
         versionName "1.0.1"
@@ -70,6 +70,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+    }
+
+    sourceSets {
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
     }
 }
 
