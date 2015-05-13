@@ -2,6 +2,7 @@ package derekwilson.net.rameater.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,6 +79,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.action_help:
                 Intent help_intent = new Intent(this, HelpActivity.class);
                 startActivity(help_intent);
+                break;
+            case R.id.action_app_settings:
+                startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
                 break;
         }
 
