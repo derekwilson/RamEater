@@ -20,7 +20,21 @@
         </activity>
         <activity
             android:name=".activity.settings.SettingsActivity"
+            android:parentActivityName=".activity.main.MainActivity"
             android:label="@string/title_activity_settings" >
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.help.HelpActivity"
+            android:parentActivityName=".activity.main.MainActivity"
+            android:label="@string/title_activity_help">
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.main.MainActivity" />
         </activity>
         <service
             android:name=".services.Service1"

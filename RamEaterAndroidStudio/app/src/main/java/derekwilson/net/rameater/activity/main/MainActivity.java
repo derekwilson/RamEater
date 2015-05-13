@@ -20,6 +20,7 @@ import java.util.List;
 
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
+import derekwilson.net.rameater.activity.help.HelpActivity;
 import derekwilson.net.rameater.activity.settings.SettingsActivity;
 import derekwilson.net.rameater.services.Service1;
 import derekwilson.net.rameater.services.Service2;
@@ -74,6 +75,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_help:
+                Intent help_intent = new Intent(this, HelpActivity.class);
+                startActivity(help_intent);
+                break;
         }
 
 		return super.onOptionsItemSelected(item);
