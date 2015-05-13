@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import derekwilson.net.rameater.R;
+import derekwilson.net.rameater.RamEater;
 import derekwilson.net.rameater.activity.settings.SettingsActivity;
 import derekwilson.net.rameater.services.Service1;
 import derekwilson.net.rameater.services.Service2;
@@ -26,60 +27,27 @@ import derekwilson.net.rameater.services.Service3;
 import derekwilson.net.rameater.services.Service4;
 import derekwilson.net.rameater.services.Service5;
 import derekwilson.net.rameater.services.Service6;
+import derekwilson.net.rameater.services.ServiceConfig;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-    public class ServiceConfig {
-        public String DisplayName;
-        public Intent StartIntent;
-        public Class<?> ServiceClass;
-    }
-
-    private final int numberOfServices = 6;
-
-    private List<ServiceConfig> services;
     private ServiceArrayAdapter adapter;
     private ListView lvServices;
-
-    private void initServices() {
-        services = new ArrayList<ServiceConfig>(numberOfServices);
-        for (int index=0; index<numberOfServices; index++){
-            ServiceConfig thisConfig = new ServiceConfig();
-            thisConfig.DisplayName = "Service " + (index + 1);
-            services.add(thisConfig);
-        }
-
-        services.get(0).ServiceClass = Service1.class;
-        services.get(1).ServiceClass = Service2.class;
-        services.get(2).ServiceClass = Service3.class;
-        services.get(3).ServiceClass = Service4.class;
-        services.get(4).ServiceClass = Service5.class;
-        services.get(5).ServiceClass = Service6.class;
-
-        for (ServiceConfig config : services){
-            config.StartIntent = new Intent(this, config.ServiceClass);
-        }
-    }
-
-    private void stopAllServices() {
-        for (ServiceConfig config : services){
-            stopService(config.StartIntent);
-        }
-    }
+    private RamEater application;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
         lvServices = (ListView) findViewById(R.id.lvServices);
-        initServices();
-        adapter = new ServiceArrayAdapter(this,services);
+        application = (RamEater)getApplication();
+        adapter = new ServiceArrayAdapter(this,application.getAllServiceConfigs());
         lvServices.setAdapter(adapter);
 	}
 
 	@Override
 	public void onClick(View view) {
-		logMessage("OnClick");
+		RamEater.logMessage("OnClick");
 	}
 
 	@Override
@@ -100,7 +68,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.action_stop_all:
-                stopAllServices();
+                application.stopAllServices();
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -109,10 +77,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void logMessage(String message) {
-		Log.i("RamEater", message);
 	}
 
     public class ServiceArrayAdapter extends ArrayAdapter<ServiceConfig> {

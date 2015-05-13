@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.RingtonePreference;
+import android.widget.Toast;
 
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
@@ -60,6 +61,9 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key == getString(R.string.pref_key_max_memory_mb)) {
+            RamEater app = (RamEater) getApplication();
+            app.stopAllServices();
+            Toast.makeText(this, "All services have been stopped", Toast.LENGTH_SHORT).show();
             preferences.setMaxMemoryMb(sharedPreferences.getString(key,"0"));
         }
         setMemorySummary();
