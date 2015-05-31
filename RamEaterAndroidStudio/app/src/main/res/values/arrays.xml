@@ -11,6 +11,10 @@
         <item>300 MB</item>
         <item>200 MB</item>
         <item>100 MB</item>
+        <item>50 MB</item>
+        <item>20 MB</item>
+        <item>10 MB</item>
+        <item>5 MB</item>
     </string-array>
     <string-array name="prefs_memory_values">
         <item>0</item>
@@ -23,5 +27,9 @@
         <item>300</item>
         <item>200</item>
         <item>100</item>
+        <item>50</item>
+        <item>20</item>
+        <item>10</item>
+        <item>5</item>
     </string-array>
 </resources>

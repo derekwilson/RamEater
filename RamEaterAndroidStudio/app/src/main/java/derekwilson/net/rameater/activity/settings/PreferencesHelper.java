@@ -15,7 +15,8 @@ public class PreferencesHelper implements IPreferencesHelper {
 
     public PreferencesHelper(Context context)
     {
-        preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        // we need multi process as the services need to read the settings that are set in the main UI process
+        preferences = context.getSharedPreferences(NAME, Context.MODE_MULTI_PROCESS);
         maxMemoryKey = context.getResources().getString(R.string.pref_key_max_memory_mb);
     }
 

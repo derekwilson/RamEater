@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import derekwilson.net.rameater.RamEater;
 import derekwilson.net.rameater.activity.main.MainActivity;
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.activity.settings.IPreferencesHelper;
@@ -34,9 +35,6 @@ public abstract class EaterService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		logMessage("Received start id " + startId + ": " + intent);
-
-        // inject
-        preferences = new PreferencesHelper(getBaseContext());
 
         startForeground(getServiceId(), notificationBuilder.build());
 		eatAllMemory();
@@ -71,20 +69,24 @@ public abstract class EaterService extends Service {
 	}
 
 	private void eatAllMemory() {
+        preferences = new PreferencesHelper(getBaseContext());
         int max = preferences.getMaxMemoryMb();
+        boolean retry = false;
         if (max == 0) {
-            //Get amount of memory this app is allowed to use (in MBs)
+            // Get amount of memory this app is allowed to use (in MBs)
             int availMem = activityManager.getLargeMemoryClass();
             logMessage("available memory MB = " + availMem);
             max = availMem;
+            // we need to retry as getLargeMemoryClass does not really understand MB
+            retry = true;
         }
         else {
             logMessage("preferences max MB = " + max);
         }
-        eatMemory(max);
+        eatMemory(max,retry);
 	}
 
-	private void eatMemory(int numberOfMb) {
+	private void eatMemory(int numberOfMb, boolean retry) {
 		logMessage("eating memory MB = " + numberOfMb);
 		// convert MB -> KB -> Bytes
 		int numberOfBytes = numberOfMb * 1024 * 1024;
@@ -104,8 +106,15 @@ public abstract class EaterService extends Service {
 				logMessage("success eating memory bytes ="  + numberOfBytes);
 			}
 			catch (OutOfMemoryError e) {
-				// we cannot have that much, lets try 1MB less
-				numberOfBytes = numberOfBytes - (1024 * 1024);
+                if (retry) {
+                    // we cannot have that much, lets try 1MB less
+                    numberOfBytes = numberOfBytes - (1024 * 1024);
+                }
+                else {
+                    message = "Cannot allocate " + (numberOfBytes / 1024 / 1024) + " MB, try less memory";
+                    updateNotification(message);
+                    return;
+                }
 			}
 		}
 
@@ -154,6 +163,6 @@ public abstract class EaterService extends Service {
 	}
 
 	protected void logMessage(String message) {
-		Log.i("EaterService", "Service: " + getServiceName() +  " " + message);
+        RamEater.logMessage("Service: " + getServiceName() + " " + message);
 	}
 }
