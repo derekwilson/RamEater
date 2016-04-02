@@ -79,7 +79,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         if (key == getString(R.string.pref_key_max_memory_mb)) {
             RamEater app = (RamEater) getApplication();
             app.stopAllServices();
-            Toast.makeText(this, "All services have been stopped", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.all_stopped, Toast.LENGTH_SHORT).show();
             preferences.setMaxMemoryMb(sharedPreferences.getString(key,"0"));
         }
         setMemorySummary();

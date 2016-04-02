@@ -2,6 +2,7 @@ package derekwilson.net.rameater.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.design.widget.NavigationView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -88,9 +90,17 @@ public class MainActivity extends BaseActivity
 		        return true;
             case R.id.action_stop_all:
                 application.stopAllServices();
+	            Toast.makeText(this, R.string.all_stopped, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_app_settings:
-                startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
+	            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+		            // goto settings -> developer options
+		            startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+	            }
+	            else {
+		            // goto settings -> Apps
+		            startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
+	            }
                 break;
         }
 
