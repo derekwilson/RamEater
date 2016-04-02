@@ -14,6 +14,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="@string/placeholder"
+        android:textColor="@color/primary"
         android:textSize="16sp" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

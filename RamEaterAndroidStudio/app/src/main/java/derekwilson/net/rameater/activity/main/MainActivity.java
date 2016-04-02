@@ -2,10 +2,10 @@ package derekwilson.net.rameater.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,32 +15,46 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.support.design.widget.NavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
+import derekwilson.net.rameater.activity.BaseActivity;
 import derekwilson.net.rameater.activity.help.HelpActivity;
 import derekwilson.net.rameater.activity.settings.SettingsActivity;
-import derekwilson.net.rameater.services.Service1;
-import derekwilson.net.rameater.services.Service2;
-import derekwilson.net.rameater.services.Service3;
-import derekwilson.net.rameater.services.Service4;
-import derekwilson.net.rameater.services.Service5;
-import derekwilson.net.rameater.services.Service6;
 import derekwilson.net.rameater.services.ServiceConfig;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity
+        implements
+        View.OnClickListener,
+        NavigationView.OnNavigationItemSelectedListener
+{
+	private DrawerLayout drawer;
+	private NavigationView navigationView;
+
     private ServiceArrayAdapter adapter;
     private ListView lvServices;
     private RamEater application;
 
     @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_main;
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+	    toolbarMenuButtonNeeded = true;
+	    super.onCreate(savedInstanceState);
+
+	    drawer = (DrawerLayout) findViewById(R.id.drawer);
+	    navigationView = (NavigationView) findViewById(R.id.nav_view);
+	    if (navigationView != null) {
+		    navigationView.setNavigationItemSelectedListener(this);
+	    }
+
         lvServices = (ListView) findViewById(R.id.lvServices);
         application = (RamEater)getApplication();
         adapter = new ServiceArrayAdapter(this,application.getAllServiceConfigs());
@@ -69,17 +83,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		int id = item.getItemId();
 
         switch (id) {
+	        case android.R.id.home:
+		        drawer.openDrawer(GravityCompat.START);
+		        return true;
             case R.id.action_stop_all:
                 application.stopAllServices();
                 return true;
-            case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_help:
-                Intent help_intent = new Intent(this, HelpActivity.class);
-                startActivity(help_intent);
-                break;
             case R.id.action_app_settings:
                 startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
                 break;
@@ -88,7 +97,33 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		return super.onOptionsItemSelected(item);
 	}
 
-    public class ServiceArrayAdapter extends ArrayAdapter<ServiceConfig> {
+	@Override
+	public boolean onNavigationItemSelected(MenuItem menuItem) {
+		RamEater.logMessage("Navigation item selected: checked " + menuItem.getTitle());
+		switch (menuItem.getItemId()) {
+			case R.id.navigation_settings:
+				Intent settingsIntent = new Intent(this, SettingsActivity.class);
+				startActivity(settingsIntent);
+				break;
+			case R.id.navigation_help:
+				Intent helpIntent = new Intent(this, HelpActivity.class);
+				startActivity(helpIntent);
+				break;
+		}
+		drawer.closeDrawers();
+		return false;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (drawer.isDrawerOpen(navigationView)) {
+			drawer.closeDrawers();
+			return;
+		}
+		super.onBackPressed();
+	}
+
+	public class ServiceArrayAdapter extends ArrayAdapter<ServiceConfig> {
         private final Context context;
         private final List<ServiceConfig> values;
 

@@ -1,0 +1,5 @@
+<resources>
+
+	<dimen name="seekbar_thumb_width">32dp</dimen>
+
+</resources>

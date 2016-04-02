@@ -3,15 +3,15 @@ import groovy.swing.SwingBuilder
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 7
         targetSdkVersion 21
         versionCode 5
-        versionName "1.0.1"
+        versionName "1.0.1 NAV1"
     }
 
     signingConfigs {
@@ -64,6 +64,19 @@ android {
         }
     }
 
+    // Customise the output apk filename to be "recommender-buildtype-version.apk"
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def manifestParser = new com.android.builder.core.DefaultManifestParser()
+                def fileName = outputFile.name.replace("app-", "rameater-")
+                fileName = fileName.replace(".apk", "-" + android.defaultConfig.versionName + ".apk")
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -76,9 +89,21 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'NOTICE'
+        exclude 'APK LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
+
+    // android support libs
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+	compile 'com.android.support:design:23.2.1'
 }

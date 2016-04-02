@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="AppTheme" parent="AppTheme.Base"/>
+
+	<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Here we setting appcompat’s actionBarStyle -->
+		<item name="actionBarStyle">@style/Theme.AppCompat.Light</item>
+
+		<!-- Use the Toolbar instead of the ActionBar
+			   (new in API 21 and AppCompat). -->
+		<item name="windowActionBar">false</item>
+		<item name="android:windowNoTitle">true</item>
+
+		<!-- we want the actionmode to overlay the toolbar -->
+		<item name="windowActionModeOverlay">true</item>
+
+		<!-- colorPrimary is used, for instance, for the default ActionBar
+			   (but not Toolbar) background.
+				We specify the same color for the toolbar background in
+				toolbar.xml.. -->
+		<item name="colorPrimary">@color/primary</item>
+		<!-- colorPrimaryDark is used for the status bar (with the
+			   battery, clock, etc). -->
+		<item name="colorPrimaryDark">@color/primary_dark</item>
+		<!-- colorAccent is used as the default value for
+				colorControlActivated which is used to tint widgets. -->
+		<item name="colorAccent">@color/accent</item>
+	</style>
+
+</resources>

@@ -14,14 +14,21 @@ import java.io.InputStreamReader;
 
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
+import derekwilson.net.rameater.activity.BaseActivity;
 
-public class HelpActivity extends ActionBarActivity {
+public class HelpActivity extends BaseActivity {
     private TextView helpTextView;
 
     @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_help;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        toolbarBackButtonNeeded = true;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+
         helpTextView = (TextView)findViewById(R.id.txtHelp);
 
         // make links clickable

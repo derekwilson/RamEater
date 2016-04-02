@@ -1,6 +1,8 @@
 package derekwilson.net.rameater.activity.settings;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -24,49 +26,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
     private Toolbar toolbar;
 
-    private void setupToolbar() {
-        Toolbar bar;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
-            bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings, root, false);
-            root.addView(bar, 0); // insert at top
-        } else {
-            ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-            ListView content = (ListView) root.getChildAt(0);
-
-            root.removeAllViews();
-
-            bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings, root, false);
-
-
-            int height;
-            TypedValue tv = new TypedValue();
-            if (getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
-                height = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-            }else{
-                height = bar.getHeight();
-            }
-
-            content.setPadding(0, height, 0, 0);
-
-            root.addView(content);
-            root.addView(bar);
-        }
-
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupToolbar();
+        attachToolbar();
+        fixToolbarTextAndIconColor(0xFFFFFFFF);
 
         addPreferencesFromResource(R.xml.activty_settings);
 
@@ -118,6 +83,35 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             preferences.setMaxMemoryMb(sharedPreferences.getString(key,"0"));
         }
         setMemorySummary();
+    }
+
+    private void attachToolbar() {
+        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+        View content = root.getChildAt(0);
+        LinearLayout toolbarContainer = (LinearLayout) View.inflate(this, R.layout.activity_settings, null);
+
+        root.removeAllViews();
+        toolbarContainer.addView(content);      // this will preserve whatever was created for this class
+        root.addView(toolbarContainer);
+
+        toolbar = (Toolbar) toolbarContainer.findViewById(R.id.toolbar_main);
+        toolbar.setTitle(getTitle());
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void fixToolbarTextAndIconColor(int iconColor) {
+        // there is a problem with the text / icon colour when we put the toolbar on a preferences page like this
+        // so we do it ourselves
+        toolbar.setTitleTextColor(iconColor);
+        toolbar.setSubtitleTextColor(iconColor);
+        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(iconColor, PorterDuff.Mode.MULTIPLY);
+        toolbar.getNavigationIcon().setColorFilter(colorFilter);
     }
 }
 
