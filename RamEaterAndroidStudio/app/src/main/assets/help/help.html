@@ -13,7 +13,7 @@
 &#149; Run the application you want to test. Perform actions until you are at the activity you want to tesr.<br>
 &#149; Switch back to RamEater and start some more services until the memory is fully allocated again.<br>
 &#149; Switch back to the application you are trying to test and you will notice that the application process will have been killed off by the OS and when you switch to it it will be restored from saved state.<br>
-&#149; You can check how much memory has been allocated by going to Settings -> Apps -> Running and you will see how much memory has been allocated to each RamEater process and also how much memory is free on the phone.<br>
+&#149; You can check how much memory has been allocated by selecting Goto Running Apps (Settings->Apps->Running) and you will see how much memory has been allocated to each RamEater process and also how much memory is free on the phone.<br>
 </p>
 <h3>After use</h3>
 <p>After you have finished using RamEater you should shut it down or you phone will continue to work very slowly as all memory has been allocated. To do this</p>
@@ -27,3 +27,5 @@
 <p>The <a href="https://github.com/derekwilson/RamEater">source code</a> for RamEater is available on Github.</p>
 <h3>Android 2</h3>
 <p>In Android versions earlier than Android 3 it is not possible to automatically detect the maximum amount of memory to allocate, you will need to select the amount of memory each service will allocate in the settings.</p>
+<h3>Android 6</h3>
+<p>From Android 6 the running apps are not included in the Apps area of Settings. So from Android 6 when you select Goto Running Apps you will go to the Developer Options where the Running Services are now.</p>
