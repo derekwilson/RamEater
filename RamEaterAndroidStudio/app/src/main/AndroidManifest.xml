@@ -60,6 +60,22 @@
             android:name=".services.Service6"
             android:process=":sp6">
         </service>
+        <service
+            android:name=".services.Service7"
+            android:process=":sp7">
+        </service>
+        <service
+            android:name=".services.Service8"
+            android:process=":sp8">
+        </service>
+        <service
+            android:name=".services.Service9"
+            android:process=":sp9">
+        </service>
+        <service
+            android:name=".services.Service10"
+            android:process=":sp10">
+        </service>
     </application>
 
 </manifest>

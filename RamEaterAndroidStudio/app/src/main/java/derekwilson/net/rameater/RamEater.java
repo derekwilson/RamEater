@@ -12,22 +12,25 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import derekwilson.net.rameater.activity.main.MainActivity;
-import derekwilson.net.rameater.activity.settings.PreferencesHelper;
 import derekwilson.net.rameater.services.Service1;
+import derekwilson.net.rameater.services.Service10;
 import derekwilson.net.rameater.services.Service2;
 import derekwilson.net.rameater.services.Service3;
 import derekwilson.net.rameater.services.Service4;
 import derekwilson.net.rameater.services.Service5;
 import derekwilson.net.rameater.services.Service6;
+import derekwilson.net.rameater.services.Service7;
+import derekwilson.net.rameater.services.Service8;
+import derekwilson.net.rameater.services.Service9;
 import derekwilson.net.rameater.services.ServiceConfig;
 
 public class RamEater extends Application {
-    private final int numberOfServices = 6;
+    private final int numberOfServices = 10;
     private List<ServiceConfig> services;
 
     @Override
     public void onCreate() {
+        super.onCreate();
         logMessage("RamEater: v" + getVersionName(getBaseContext()));
         logMessage("RamEater: SDK " + Build.VERSION.SDK_INT);
         PreferenceManager.setDefaultValues(this,R.xml.activty_settings,false);
@@ -47,6 +50,10 @@ public class RamEater extends Application {
         services.get(3).ServiceClass = Service4.class;
         services.get(4).ServiceClass = Service5.class;
         services.get(5).ServiceClass = Service6.class;
+        services.get(6).ServiceClass = Service7.class;
+        services.get(7).ServiceClass = Service8.class;
+        services.get(8).ServiceClass = Service9.class;
+        services.get(9).ServiceClass = Service10.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);

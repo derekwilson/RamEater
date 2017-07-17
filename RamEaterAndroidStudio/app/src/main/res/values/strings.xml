@@ -24,6 +24,10 @@
     <string name="service_4">Service 4</string>
     <string name="service_5">Service 5</string>
     <string name="service_6">Service 6</string>
+    <string name="service_7">Service 7</string>
+    <string name="service_8">Service 8</string>
+    <string name="service_9">Service 9</string>
+    <string name="service_10">Service 10</string>
 
     <string name="pref_key_version">prefs_version</string>
     <string name="pref_key_max_memory_mb">prefs_max_memory_mb</string>

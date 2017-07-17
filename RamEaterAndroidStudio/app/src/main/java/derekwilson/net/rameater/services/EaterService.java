@@ -17,7 +17,6 @@ import derekwilson.net.rameater.activity.settings.PreferencesHelper;
 
 public abstract class EaterService extends Service {
 	protected abstract int getServiceId();
-	protected abstract String getServiceName();
 
 	private ActivityManager activityManager;
 	private NotificationManager notificationManager;
@@ -139,6 +138,10 @@ public abstract class EaterService extends Service {
 		CharSequence text = getText(R.string.service_started);
 		showNotification(text);
 
+	}
+
+	private String getServiceName() {
+		return getString(getServiceId());
 	}
 
 	private void showNotification(CharSequence message) {

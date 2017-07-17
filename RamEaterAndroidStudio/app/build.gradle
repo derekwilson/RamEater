@@ -4,14 +4,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 7
         targetSdkVersion 21
-        versionCode 6
-        versionName "1.0.2"
+        versionCode 7
+        versionName "1.0.3"
     }
 
     signingConfigs {
@@ -64,12 +64,11 @@ android {
         }
     }
 
-    // Customise the output apk filename to be "recommender-buildtype-version.apk"
+    // Customise the output apk filename to be "rameater-buildtype-version.apk"
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def manifestParser = new com.android.builder.core.DefaultManifestParser()
                 def fileName = outputFile.name.replace("app-", "rameater-")
                 fileName = fileName.replace(".apk", "-" + android.defaultConfig.versionName + ".apk")
                 output.outputFile = new File(outputFile.parent, fileName)
@@ -103,7 +102,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // android support libs
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-	compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+	compile 'com.android.support:design:23.4.0'
 }

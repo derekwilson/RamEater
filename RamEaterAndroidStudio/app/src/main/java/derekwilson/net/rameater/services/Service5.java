@@ -8,10 +8,5 @@ public class Service5 extends EaterService {
     protected int getServiceId() {
         return R.string.service_5;
     }
-
-    @Override
-    protected String getServiceName() {
-        return getString(R.string.service_5);
-    }
 }
 
