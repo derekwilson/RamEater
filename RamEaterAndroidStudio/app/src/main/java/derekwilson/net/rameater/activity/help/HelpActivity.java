@@ -2,7 +2,6 @@ package derekwilson.net.rameater.activity.help;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;

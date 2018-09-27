@@ -1,21 +1,26 @@
 package derekwilson.net.rameater.services;
 
 import android.app.ActivityManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
+import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
 import derekwilson.net.rameater.activity.main.MainActivity;
-import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.activity.settings.IPreferencesHelper;
 import derekwilson.net.rameater.activity.settings.PreferencesHelper;
 
 public abstract class EaterService extends Service {
+	// we cannot modify a channel once its created - so we need to increment this ID or reinstall
+	private static final String NOTIFICATION_CHANNEL_ID = "rameater_channel_id_01";
+
 	protected abstract int getServiceId();
 
 	private ActivityManager activityManager;
@@ -56,7 +61,7 @@ public abstract class EaterService extends Service {
 	@Override
 	public void onDestroy() {
 		logMessage("OnDestroy Method is called");
-		freeAllMemoty();
+		freeAllMemory();
 		notificationManager.cancel(getServiceId());
 		super.onDestroy();
 	}
@@ -96,7 +101,7 @@ public abstract class EaterService extends Service {
 		while (!memoryAllocated)
 		{
 			try {
-				//logMessage("trying to eat memory bytes = " + numberOfBytes);
+				logMessage("trying to eat memory bytes = " + numberOfBytes);
 				// we need to do this before we allocate all the memory :-)
 				message = (numberOfBytes / 1024 / 1024) + " MB allocated";
 				// char is 2 bytes in java
@@ -106,8 +111,8 @@ public abstract class EaterService extends Service {
 			}
 			catch (OutOfMemoryError e) {
                 if (retry) {
-                    // we cannot have that much, lets try 1MB less
-                    numberOfBytes = numberOfBytes - (1024 * 1024);
+                    // we cannot have that much, lets try 5MB less
+                    numberOfBytes = numberOfBytes - (1024 * 1024 * 5);
                 }
                 else {
                     message = "Cannot allocate " + (numberOfBytes / 1024 / 1024) + " MB, try less memory";
@@ -117,11 +122,13 @@ public abstract class EaterService extends Service {
 			}
 		}
 
+		logMessage("after memory allocation");
         fillBlackHole(numberOfBytes / 2);
 		updateNotification(message);
 	}
 
     private void fillBlackHole(int numberOfChars) {
+	    logMessage("filling memory bytes ="  + numberOfChars);
         // dalvik allocate the memory when requested
         // art is clever and waits until you use the memory
         for (int index=0; index<numberOfChars; index++) {
@@ -129,7 +136,7 @@ public abstract class EaterService extends Service {
         }
     }
 
-	private void freeAllMemoty() {
+	private void freeAllMemory() {
 		logMessage("freeing memory");
 		memoryBlackHole = null;
 	}
@@ -144,12 +151,31 @@ public abstract class EaterService extends Service {
 		return getString(getServiceId());
 	}
 
+	@RequiresApi(Build.VERSION_CODES.O)
+	private void createChannel() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			logMessage("creating channel ="  + NOTIFICATION_CHANNEL_ID);
+
+			NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "RamEater Notifications", NotificationManager.IMPORTANCE_LOW);
+
+			// Configure the notification channel.
+			notificationChannel.setDescription("Memory Eater Services");
+			notificationChannel.enableLights(false);
+			notificationChannel.enableVibration(false);
+			notificationManager.createNotificationChannel(notificationChannel);
+		}
+	}
+
 	private void showNotification(CharSequence message) {
 		// The PendingIntent to launch our activity if the user selects this  notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, MainActivity.class), 0);
 
-		notificationBuilder = new NotificationCompat.Builder(this)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			createChannel();
+		}
+
+		notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
 				.setContentTitle(getString(R.string.app_name) + " " + getServiceName())
 				.setContentText(message)
 				.setSmallIcon(R.mipmap.ic_launcher)
@@ -161,8 +187,10 @@ public abstract class EaterService extends Service {
 	}
 
 	private void updateNotification(String message) {
+		logMessage("updateNotification ="  + message);
 		notificationBuilder.setContentText(message);
 		notificationManager.notify(getServiceId(), notificationBuilder.build());
+		logMessage("updateNotification complete");
 	}
 
 	protected void logMessage(String message) {

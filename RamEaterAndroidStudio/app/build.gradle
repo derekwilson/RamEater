@@ -3,15 +3,15 @@ import groovy.swing.SwingBuilder
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
-        minSdkVersion 7
-        targetSdkVersion 21
-        versionCode 7
-        versionName "1.0.3"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 8
+        versionName "1.0.4"
     }
 
     signingConfigs {
@@ -25,6 +25,10 @@ android {
 
     gradle.taskGraph.whenReady { taskGraph ->
         if (taskGraph.hasTask(':app:assembleRelease')) {
+            // if you get a headless error from gradle build java.awt.HeadlessException
+            // stop the daemon by using
+            // gradlew --stop
+            System.setProperty("java.awt.headless", "false");
             def password = ""
 
             if (System.console() == null) {
@@ -64,15 +68,10 @@ android {
         }
     }
 
-    // Customise the output apk filename to be "rameater-buildtype-version.apk"
+    // Customise the output apk filename to be "recommender-buildtype-version.apk"
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace("app-", "rameater-")
-                fileName = fileName.replace(".apk", "-" + android.defaultConfig.versionName + ".apk")
-                output.outputFile = new File(outputFile.parent, fileName)
-            }
+        variant.outputs.all {
+            outputFileName = "rameater-${variant.name}-${variant.versionName}.apk"
         }
     }
 
@@ -99,10 +98,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // android support libs
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-	compile 'com.android.support:design:23.4.0'
+    implementation 'com.android.support:support-v4:26.0.2'
+    implementation 'com.android.support:appcompat-v7:26.0.2'
+    implementation 'com.android.support:design:26.0.2'
 }
