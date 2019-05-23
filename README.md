@@ -1,7 +1,7 @@
 # RamEater
 Android memory stress tool for developers and testers
 
-##AndroidStudio
+## AndroidStudio
 
 This project uses AndroidStudio and Gradle, the project is in a folder called RamEaterAndroidStudio
 
@@ -13,7 +13,7 @@ You will also need the Java SE JDK
 
 http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 
-###Building for release
+## Building for release
 
 ```gradlew assembleRelease```
 
