@@ -76,6 +76,30 @@
             android:name=".services.Service10"
             android:process=":sp10">
         </service>
+        <service
+            android:name=".services.Service11"
+            android:process=":sp11">
+        </service>
+        <service
+            android:name=".services.Service12"
+            android:process=":sp12">
+        </service>
+        <service
+            android:name=".services.Service13"
+            android:process=":sp13">
+        </service>
+        <service
+            android:name=".services.Service14"
+            android:process=":sp14">
+        </service>
+        <service
+            android:name=".services.Service15"
+            android:process=":sp15">
+        </service>
+        <service
+            android:name=".services.Service16"
+            android:process=":sp16">
+        </service>
     </application>
 
 </manifest>

@@ -14,6 +14,12 @@ import java.util.List;
 
 import derekwilson.net.rameater.services.Service1;
 import derekwilson.net.rameater.services.Service10;
+import derekwilson.net.rameater.services.Service11;
+import derekwilson.net.rameater.services.Service12;
+import derekwilson.net.rameater.services.Service13;
+import derekwilson.net.rameater.services.Service14;
+import derekwilson.net.rameater.services.Service15;
+import derekwilson.net.rameater.services.Service16;
 import derekwilson.net.rameater.services.Service2;
 import derekwilson.net.rameater.services.Service3;
 import derekwilson.net.rameater.services.Service4;
@@ -25,7 +31,7 @@ import derekwilson.net.rameater.services.Service9;
 import derekwilson.net.rameater.services.ServiceConfig;
 
 public class RamEater extends Application {
-    private final int numberOfServices = 10;
+    private final int numberOfServices = 16;
     private List<ServiceConfig> services;
 
     @Override
@@ -54,6 +60,12 @@ public class RamEater extends Application {
         services.get(7).ServiceClass = Service8.class;
         services.get(8).ServiceClass = Service9.class;
         services.get(9).ServiceClass = Service10.class;
+        services.get(10).ServiceClass = Service11.class;
+        services.get(11).ServiceClass = Service12.class;
+        services.get(12).ServiceClass = Service13.class;
+        services.get(13).ServiceClass = Service14.class;
+        services.get(14).ServiceClass = Service15.class;
+        services.get(15).ServiceClass = Service16.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);
