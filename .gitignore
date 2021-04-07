@@ -40,6 +40,9 @@ test-report*/
 # Don't want to commit the keystore
 *.keystore
 
+# Never check in the key password
+/LocalOnly
+
 # deployment and debugging files
 AndroidSupport/db/
 AndroidSupport/Icon/
