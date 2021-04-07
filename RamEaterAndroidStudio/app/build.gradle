@@ -1,10 +1,8 @@
-import groovy.swing.SwingBuilder
-
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '29.0.2'
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
@@ -17,55 +15,16 @@ android {
     signingConfigs {
         release {
             storeFile file("../../AndroidSupport/deploy/derek.keystore")
-            storePassword "not real password"
+            storePassword System.getenv("RAMEATER_RELEASE_PASSWORD")
             keyAlias "rameater"
-            keyPassword "not real password"
+            keyPassword System.getenv("RAMEATER_RELEASE_PASSWORD")
         }
     }
 
-    gradle.taskGraph.whenReady { taskGraph ->
-        if (taskGraph.hasTask(':app:assembleRelease')) {
-            // if you get a headless error from gradle build java.awt.HeadlessException
-            // stop the daemon by using
-            // gradlew --stop
-            System.setProperty("java.awt.headless", "false");
-            def password = ""
-
-            if (System.console() == null) {
-                new SwingBuilder().edt {
-                    dialog(modal: true,
-                            title: "Enter signing password",
-                            alwaysOnTop: true,
-                            resizable: false,
-                            locationRelativeTo: null,
-                            pack: true,
-                            show: true
-                    ) {
-                        vbox {
-                            label(text: "Enter signing password: ")
-                            input = passwordField()
-                            button(defaultButton: true,
-                                    text: 'OK',
-                                    actionPerformed: {
-                                        password = new String(input.password)
-                                        dispose();
-                                    })
-                        }
-                    }
-                }
-            } else {
-                password = System.console().readPassword("\nEnter password: ")
-                password = new String(password)
-            }
-
-            if (password.size() <= 0) {
-                throw new InvalidUserDataException("Empty password")
-            }
-
-            // set signing config key passwords
-            android.signingConfigs.release.storePassword = password
-            android.signingConfigs.release.keyPassword = password
-        }
+    // uncover to debug any signing issues
+    afterEvaluate{
+        //println "After evel Store password ==>" + android.signingConfigs.release.storePassword
+        //println "After eval Key password ==>" + android.signingConfigs.release.keyPassword
     }
 
     // Customise the output apk filename to be "recommender-buildtype-version.apk"
