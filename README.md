@@ -9,13 +9,18 @@ You will need to download AndroidStudio from here
 
 http://developer.android.com/sdk/index.html
 
-You will also need the Java SE JDK
+## Building
 
-http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+```gradlew assembleDebug```
+
+Or use android studio
 
 ## Building for release
 
 ```gradlew assembleRelease```
 
-When building a release version then you will be prompted for the keystore password - if you dont know it then you cannot build.
+The release build needs the signing key and credentials if you don't have it you cannot build a relase
 
+## Prebuild APKs
+
+There is a [release archive](AndroidSupport/releases/README.md) in the `AndroidSupport` folder in this repo.
