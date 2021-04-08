@@ -33,7 +33,7 @@ Major changes for each version
 
 ### v1.0.2 - 3 Apr 2016
 
-6 Services
+- 6 Services
 - Added burger menu for settings and help
 - Changed navigate to running apps to be navigate to developer options for Android 6+ (Android no longer supports the intent to goto running apps)
 
