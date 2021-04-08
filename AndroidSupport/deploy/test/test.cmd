@@ -1,1 +1,0 @@
-keytool -list -v -keystore derek.keystore

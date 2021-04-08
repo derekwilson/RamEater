@@ -1,1 +1,0 @@
-path "C:\Program Files\Android\Android Studio\jre\bin";%PATH%
