@@ -79,9 +79,16 @@ public class RamEater extends Application {
         return services;
     }
 
+    public void startAllServices() {
+        getAllServiceConfigs();
+        for (ServiceConfig config : services) {
+            startService(config.StartIntent);
+        }
+    }
+
     public void stopAllServices() {
         getAllServiceConfigs();
-        for (ServiceConfig config : services){
+        for (ServiceConfig config : services) {
             stopService(config.StartIntent);
         }
     }
