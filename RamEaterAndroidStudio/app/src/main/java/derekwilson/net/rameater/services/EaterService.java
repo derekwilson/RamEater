@@ -11,6 +11,7 @@ import android.os.Debug;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import derekwilson.net.rameater.R;
 import derekwilson.net.rameater.RamEater;
@@ -42,7 +43,13 @@ public abstract class EaterService extends Service {
 		logMessage("Received start id " + startId + ": " + intent);
 		logMemoryUsage("onStartCommand - start");
 
-        startForeground(getServiceId(), notificationBuilder.build());
+		try {
+			startForeground(getServiceId(), notificationBuilder.build());
+		} catch (SecurityException ex) {
+			logError("Permission denied", ex);
+			Toast.makeText(this, R.string.service_not_started_permission, Toast.LENGTH_SHORT).show();
+			return START_NOT_STICKY;
+		}
 		synchronized(this) {
 			if (memoryBlackHole != null) {
 				// we already had memory allocated
@@ -217,7 +224,11 @@ public abstract class EaterService extends Service {
 	}
 
 	protected void logMessage(String message) {
-        RamEater.logMessage("Service: " + getServiceName() + " " + message);
+		RamEater.logMessage("Service: " + getServiceName() + " " + message);
+	}
+
+	protected void logError(String message, Exception ex) {
+		RamEater.logError("Service: " + getServiceName() + " " + message, ex);
 	}
 
 	protected void logMemoryUsage(String message) {
@@ -246,7 +257,7 @@ public abstract class EaterService extends Service {
 					memoryInfo.getTotalSharedDirty() / 1024.0);
 			logMessage(memMessage);
 		} catch (Exception e) {
-			logMessage("cannot display memory stats " + message);
+			logError("cannot display memory stats " + message, e);
 		}
 	}
 }
