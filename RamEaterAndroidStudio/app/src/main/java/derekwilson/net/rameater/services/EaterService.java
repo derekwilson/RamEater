@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Debug;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
@@ -39,10 +40,20 @@ public abstract class EaterService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		logMessage("Received start id " + startId + ": " + intent);
+		logMemoryUsage("onStartCommand - start");
 
         startForeground(getServiceId(), notificationBuilder.build());
-		eatAllMemory();
-
+		synchronized(this) {
+			if (memoryBlackHole != null) {
+				// we already had memory allocated
+				logMessage("memory already allocated - ignoring restart");
+				updateNotificationToCurrentMemoryUsage();
+			} else {
+				eatAllMemory();
+			}
+		}
+		logMemoryUsage("onStartCommand - end");
+		logMessage("onStartCommand done");
 		// We want this service to continue running until it is explicitly
 		// stopped, so return sticky.
 		return START_STICKY;
@@ -56,6 +67,7 @@ public abstract class EaterService extends Service {
 		showNotification();
 
 		super.onCreate();
+		logMessage("onCreate Method done");
 	}
 
 	@Override
@@ -107,7 +119,7 @@ public abstract class EaterService extends Service {
 				// char is 2 bytes in java
 				memoryBlackHole = new char[numberOfBytes / 2];
 				memoryAllocated = true;
-				logMessage("success eating memory bytes ="  + numberOfBytes);
+				logMessage("success eating memory bytes = "  + numberOfBytes);
 			}
 			catch (OutOfMemoryError e) {
                 if (retry) {
@@ -124,11 +136,12 @@ public abstract class EaterService extends Service {
 
 		logMessage("after memory allocation");
         fillBlackHole(numberOfBytes / 2);
-		updateNotification(message);
+		//updateNotification(message);
+		updateNotificationToCurrentMemoryUsage();
 	}
 
     private void fillBlackHole(int numberOfChars) {
-	    logMessage("filling memory bytes ="  + numberOfChars);
+	    logMessage("filling memory bytes = "  + numberOfChars);
         // dalvik allocate the memory when requested
         // art is clever and waits until you use the memory
         for (int index=0; index<numberOfChars; index++) {
@@ -187,13 +200,53 @@ public abstract class EaterService extends Service {
 	}
 
 	private void updateNotification(String message) {
-		logMessage("updateNotification ="  + message);
+		logMessage("updateNotification = "  + message);
 		notificationBuilder.setContentText(message);
 		notificationManager.notify(getServiceId(), notificationBuilder.build());
 		logMessage("updateNotification complete");
 	}
 
+	private void updateNotificationToCurrentMemoryUsage() {
+		Debug.MemoryInfo memoryInfo = new Debug.MemoryInfo();
+		Debug.getMemoryInfo(memoryInfo);
+		String memMessage = String.format(
+				"%.2f MB allocated",
+				memoryInfo.getTotalPss() / 1024.0
+		);
+		updateNotification(memMessage);
+	}
+
 	protected void logMessage(String message) {
         RamEater.logMessage("Service: " + getServiceName() + " " + message);
+	}
+
+	protected void logMemoryUsage(String message) {
+		try {
+			double max = Runtime.getRuntime().maxMemory(); //the maximum memory the app can use
+			double heapSize = Runtime.getRuntime().totalMemory(); //current heap size
+			double heapRemaining = Runtime.getRuntime().freeMemory(); //amount available in heap
+			double nativeUsage = Debug.getNativeHeapAllocatedSize(); //is this right? I only want to account for native memory that my app is being "charged" for.  Is this the proper way to account for that?
+			//heapSize - heapRemaining = heapUsed + nativeUsage = totalUsage
+			double remaining = max - (heapSize - heapRemaining + nativeUsage);
+			String runtimeMemMessage = String.format(
+					"Memory: max=%.2f MB, heap=%.2f MB, remain=%.2f MB, native=%.2f MB",
+					max / 1024.0 / 1024.0,
+					heapSize / 1024.0 / 1024.0,
+					heapRemaining / 1024.0 / 1024.0,
+					nativeUsage / 1024.0 / 1024.0
+			);
+			logMessage(message + runtimeMemMessage);
+
+			Debug.MemoryInfo memoryInfo = new Debug.MemoryInfo();
+			Debug.getMemoryInfo(memoryInfo);
+			String memMessage = String.format(
+					"MemoryInfo: Pss=%.2f MB, Private=%.2f MB, Shared=%.2f MB",
+					memoryInfo.getTotalPss() / 1024.0,
+					memoryInfo.getTotalPrivateDirty() / 1024.0,
+					memoryInfo.getTotalSharedDirty() / 1024.0);
+			logMessage(memMessage);
+		} catch (Exception e) {
+			logMessage("cannot display memory stats " + message);
+		}
 	}
 }
