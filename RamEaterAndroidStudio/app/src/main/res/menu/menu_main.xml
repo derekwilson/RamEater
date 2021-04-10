@@ -3,13 +3,22 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 
-    <item android:id="@+id/action_app_settings"
-          android:title="@string/action_app_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-    <item android:id="@+id/action_stop_all"
-          android:title="@string/action_stop_all"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+    <group android:id="@+id/launch" >
+        <item android:id="@+id/action_app_settings"
+              android:title="@string/action_app_settings"
+              android:orderInCategory="100"
+              app:showAsAction="never"/>
+    </group>
 
+    <group android:id="@+id/start" >
+        <item android:id="@+id/action_start_all"
+            android:title="@string/action_start_all"
+            android:orderInCategory="200"
+            app:showAsAction="never"/>
+
+        <item android:id="@+id/action_stop_all"
+              android:title="@string/action_stop_all"
+              android:orderInCategory="300"
+              app:showAsAction="never"/>
+    </group>
 </menu>

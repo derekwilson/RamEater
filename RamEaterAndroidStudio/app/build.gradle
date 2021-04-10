@@ -1,71 +1,42 @@
-import groovy.swing.SwingBuilder
-
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '28.0.2'
+    compileSdkVersion 30
+    buildToolsVersion '29.0.2'
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 30
         versionCode 9
-        versionName "1.0.5"
+        versionName "1.0.5 step13"
     }
 
     signingConfigs {
         release {
-            storeFile file("../../AndroidSupport/deploy/derek.keystore")
-            storePassword "not real password"
-            keyAlias "rameater"
-            keyPassword "not real password"
         }
     }
 
-    gradle.taskGraph.whenReady { taskGraph ->
-        if (taskGraph.hasTask(':app:assembleRelease')) {
-            // if you get a headless error from gradle build java.awt.HeadlessException
-            // stop the daemon by using
-            // gradlew --stop
-            System.setProperty("java.awt.headless", "false");
-            def password = ""
+    allprojects {
+        afterEvaluate { project ->
+            def propsFile = rootProject.file('../LocalOnly/keystore.properties')
+            def configName = 'release'
 
-            if (System.console() == null) {
-                new SwingBuilder().edt {
-                    dialog(modal: true,
-                            title: "Enter signing password",
-                            alwaysOnTop: true,
-                            resizable: false,
-                            locationRelativeTo: null,
-                            pack: true,
-                            show: true
-                    ) {
-                        vbox {
-                            label(text: "Enter signing password: ")
-                            input = passwordField()
-                            button(defaultButton: true,
-                                    text: 'OK',
-                                    actionPerformed: {
-                                        password = new String(input.password)
-                                        dispose();
-                                    })
-                        }
-                    }
-                }
-            } else {
-                password = System.console().readPassword("\nEnter password: ")
-                password = new String(password)
+            if (propsFile.exists() && android.signingConfigs.hasProperty(configName)) {
+                def props = new Properties()
+                props.load(new FileInputStream(propsFile))
+                android.signingConfigs[configName].storeFile = file(props['storeFile'])
+                android.signingConfigs[configName].storePassword = props['storePassword']
+                android.signingConfigs[configName].keyAlias = props['keyAlias']
+                android.signingConfigs[configName].keyPassword = props['keyPassword']
             }
-
-            if (password.size() <= 0) {
-                throw new InvalidUserDataException("Empty password")
-            }
-
-            // set signing config key passwords
-            android.signingConfigs.release.storePassword = password
-            android.signingConfigs.release.keyPassword = password
         }
+    }
+
+    afterEvaluate{
+        // uncover to debug any signing issues
+        //println "After evel Store password ==>" + android.signingConfigs.release.storePassword
+        //println "After eval Key password ==>" + android.signingConfigs.release.keyPassword
     }
 
     // Customise the output apk filename to be "recommender-buildtype-version.apk"
@@ -101,7 +72,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // android support libs
-    implementation 'com.android.support:support-v4:26.0.2'
-    implementation 'com.android.support:appcompat-v7:26.0.2'
-    implementation 'com.android.support:design:26.0.2'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
 }

@@ -20,7 +20,11 @@ import derekwilson.net.rameater.services.Service13;
 import derekwilson.net.rameater.services.Service14;
 import derekwilson.net.rameater.services.Service15;
 import derekwilson.net.rameater.services.Service16;
+import derekwilson.net.rameater.services.Service17;
+import derekwilson.net.rameater.services.Service18;
+import derekwilson.net.rameater.services.Service19;
 import derekwilson.net.rameater.services.Service2;
+import derekwilson.net.rameater.services.Service20;
 import derekwilson.net.rameater.services.Service3;
 import derekwilson.net.rameater.services.Service4;
 import derekwilson.net.rameater.services.Service5;
@@ -31,7 +35,7 @@ import derekwilson.net.rameater.services.Service9;
 import derekwilson.net.rameater.services.ServiceConfig;
 
 public class RamEater extends Application {
-    private final int numberOfServices = 16;
+    private final int numberOfServices = 20;
     private List<ServiceConfig> services;
 
     @Override
@@ -66,9 +70,18 @@ public class RamEater extends Application {
         services.get(13).ServiceClass = Service14.class;
         services.get(14).ServiceClass = Service15.class;
         services.get(15).ServiceClass = Service16.class;
+        services.get(16).ServiceClass = Service17.class;
+        services.get(17).ServiceClass = Service18.class;
+        services.get(18).ServiceClass = Service19.class;
+        services.get(19).ServiceClass = Service20.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);
+        }
+
+        logMessage("Services initialised: " + services.size());
+        for (ServiceConfig config : services){
+            logMessage("Services " + config.DisplayName + " Class: " + config.ServiceClass);
         }
     }
 
@@ -79,15 +92,25 @@ public class RamEater extends Application {
         return services;
     }
 
+    public void startAllServices() {
+        getAllServiceConfigs();
+        for (ServiceConfig config : services) {
+            startService(config.StartIntent);
+        }
+    }
+
     public void stopAllServices() {
         getAllServiceConfigs();
-        for (ServiceConfig config : services){
+        for (ServiceConfig config : services) {
             stopService(config.StartIntent);
         }
     }
 
     public static void logMessage(String message) {
         Log.i("RamEater", message);
+    }
+    public static void logError(String message, Exception ex) {
+        Log.e("RamEater", message, ex);
     }
 
     public static String getVersionName(Context applicationContext) {

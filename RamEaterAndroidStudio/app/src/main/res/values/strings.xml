@@ -12,8 +12,12 @@
     <string name="action_app_settings">Goto Running Apps</string>
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
+    <string name="action_start_all">Start All Services</string>
     <string name="action_stop_all">Stop All Services</string>
+    <string name="all_started">Starting all services...</string>
     <string name="all_stopped">All services have been stopped</string>
+    <string name="service_not_started">Cannot start service</string>
+    <string name="service_not_started_permission">Permission denied</string>
 
     <string name="service_started">RamEater Service started. Munch munch...</string>
     <string name="service_label">RamEater Service</string>
@@ -34,6 +38,10 @@
     <string name="service_14">Service 14</string>
     <string name="service_15">Service 15</string>
     <string name="service_16">Service 16</string>
+    <string name="service_17">Service 17</string>
+    <string name="service_18">Service 18</string>
+    <string name="service_19">Service 19</string>
+    <string name="service_20">Service 20</string>
 
     <string name="pref_key_version">prefs_version</string>
     <string name="pref_key_max_memory_mb">prefs_max_memory_mb</string>

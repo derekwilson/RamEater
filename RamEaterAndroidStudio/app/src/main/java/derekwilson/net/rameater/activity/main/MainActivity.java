@@ -1,11 +1,13 @@
 package derekwilson.net.rameater.activity.main;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,6 +79,8 @@ public class MainActivity extends BaseActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
+		// we want a separator on the menu
+		MenuCompat.setGroupDividerEnabled(menu,true);
 		return true;
 	}
 
@@ -88,6 +92,10 @@ public class MainActivity extends BaseActivity
 	        case android.R.id.home:
 		        drawer.openDrawer(GravityCompat.START);
 		        return true;
+			case R.id.action_start_all:
+				application.startAllServices();
+				Toast.makeText(this, R.string.all_started, Toast.LENGTH_SHORT).show();
+				return true;
             case R.id.action_stop_all:
                 application.stopAllServices();
 	            Toast.makeText(this, R.string.all_stopped, Toast.LENGTH_SHORT).show();
@@ -159,7 +167,18 @@ public class MainActivity extends BaseActivity
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startService(thisService.StartIntent);
+                	try {
+						ComponentName name = startService(thisService.StartIntent);
+						if (name == null) {
+							RamEater.logMessage("Cannot start service");
+							Toast.makeText(getContext(), R.string.service_not_started, Toast.LENGTH_SHORT).show();
+						} else {
+							RamEater.logMessage("Started: " + name.flattenToString());
+						}
+					} catch (SecurityException ex) {
+                		RamEater.logError("permission denied", ex);
+						Toast.makeText(getContext(), R.string.service_not_started_permission, Toast.LENGTH_SHORT).show();
+					}
                 }
             });
 
