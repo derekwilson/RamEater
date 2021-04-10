@@ -13,6 +13,7 @@ The APKs support different SDK levels due to restrictions of publishing via the 
 | 1.0.3   | 17 Jul 2017 | 7 (Android 2.1) | 21 (Android 5)
 | 1.0.4   | 27 Sep 2018 | 14 (Android 4)  | 26 (Android 8)
 | 1.0.5   | 23 May 2019 | 14 (Android 4)  | 26 (Android 8)
+| 1.0.6   | 11 Apr 2021 | 14 (Android 4)  | 30 (Android 11)
 
 ## Notes
 
@@ -52,3 +53,8 @@ Major changes for each version
 - Fixed issue with toolbar when scrolling
 - Updated help
 
+### v1.0.6 - 11 Apr 2021
+
+- 20 Services
+- Added Start All menu item
+- Added services property required by SDK30, named services
