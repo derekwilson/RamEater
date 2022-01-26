@@ -1,4 +1,4 @@
-# Recommender Privacy Policy #
+# RamEater Privacy Policy #
 
 RamEater is an application written by Derek Wilson.
 
