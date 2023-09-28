@@ -17,9 +17,13 @@ Or use android studio
 
 ## Building for release
 
-```gradlew assembleRelease```
+```build```
 
 The release build needs the signing key and credentials if you don't have it you cannot build a release
+
+This does a `assembleRelease` and a `clean` as well as copying the APK to the support folder
+
+`gradle.properties` override `JAVA_HOME` to use the embedded Android Studio JDK, it needs to be 17+
 
 ## Prebuild APKs
 
