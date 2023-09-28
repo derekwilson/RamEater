@@ -189,7 +189,7 @@ public abstract class EaterService extends Service {
 	private void showNotification(CharSequence message) {
 		// The PendingIntent to launch our activity if the user selects this  notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
+				new Intent(this, MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			createChannel();

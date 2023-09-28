@@ -10,6 +10,7 @@ def getGitHash = { ->
 }
 
 android {
+    namespace 'derekwilson.net.rameater'
     compileSdkVersion 31
 
     defaultConfig {
@@ -17,7 +18,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 31
         versionCode 10
-        versionName "1.0.6step3"
+        versionName "1.0.6step6"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
 
