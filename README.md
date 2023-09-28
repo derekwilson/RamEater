@@ -19,7 +19,7 @@ Or use android studio
 
 ```gradlew assembleRelease```
 
-The release build needs the signing key and credentials if you don't have it you cannot build a relase
+The release build needs the signing key and credentials if you don't have it you cannot build a release
 
 ## Prebuild APKs
 
