@@ -14,6 +14,15 @@ The APKs support different SDK levels due to restrictions of publishing via the 
 | 1.0.4   | 27 Sep 2018 | 14 (Android 4)  | 26 (Android 8)
 | 1.0.5   | 23 May 2019 | 14 (Android 4)  | 26 (Android 8)
 | 1.0.6   | 11 Apr 2021 | 14 (Android 4)  | 30 (Android 11)
+| 1.0.7   | 28 Sep 2023 | 14 (Android 4)  | 33 (Android 13)
+
+## Installation
+
+To install use ADB like this, or email/copy the APK into the device and install in the device
+
+```
+adb install -r rameater-release-1.0.7-4abdc86.apk
+```
 
 ## Notes
 
@@ -57,4 +66,9 @@ Major changes for each version
 
 - 20 Services
 - Added Start All menu item
-- Added services property required by SDK30, named services
+- Added services property required by SDK 30, named services
+
+### v1.0.7 - 28 Sep 2023
+
+- Recompiled for SDK 33
+- Minor fix for services list UI (thanks Oliver)

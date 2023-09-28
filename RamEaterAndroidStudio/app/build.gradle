@@ -17,7 +17,7 @@ android {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 14
         targetSdkVersion 33
-        versionCode 10
+        versionCode 11
         versionName "1.0.7"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
