@@ -1,15 +1,24 @@
 apply plugin: 'com.android.application'
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 android {
     compileSdkVersion 30
-    buildToolsVersion '29.0.2'
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 14
         targetSdkVersion 30
         versionCode 10
-        versionName "1.0.6"
+        versionName "1.0.6 step2"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
 
     signingConfigs {
@@ -17,11 +26,22 @@ android {
         }
     }
 
-    allprojects {
-        afterEvaluate { project ->
+    // Customise the output apk filename to be "rameater-buildtype-version-githash.apk"
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "rameater-${variant.name}-${variant.versionName}-${getGitHash()}.apk"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+
             def propsFile = rootProject.file('../LocalOnly/keystore.properties')
             def configName = 'release'
-
             if (propsFile.exists() && android.signingConfigs.hasProperty(configName)) {
                 def props = new Properties()
                 props.load(new FileInputStream(propsFile))
@@ -37,21 +57,6 @@ android {
         // uncover to debug any signing issues
         //println "After evel Store password ==>" + android.signingConfigs.release.storePassword
         //println "After eval Key password ==>" + android.signingConfigs.release.keyPassword
-    }
-
-    // Customise the output apk filename to be "recommender-buildtype-version.apk"
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "rameater-${variant.name}-${variant.versionName}.apk"
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
     }
 
     sourceSets {
