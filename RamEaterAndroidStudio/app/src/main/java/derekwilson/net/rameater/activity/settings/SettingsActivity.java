@@ -3,21 +3,17 @@ package derekwilson.net.rameater.activity.settings;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.RingtonePreference;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import derekwilson.net.rameater.R;
+import derekwilson.net.rameater.BuildConfig;
 import derekwilson.net.rameater.RamEater;
 import derekwilson.net.rameater.RamEaterBuildConfig;
 
@@ -40,7 +36,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         findPreference(getResources().getString(R.string.pref_key_version)).setSummary(
                 "Version " + RamEater.getVersionName(getApplicationContext()) +
-                        (RamEaterBuildConfig.PRODUCTION ? " (prod)" : " (dev)")
+                        (RamEaterBuildConfig.PRODUCTION ? " (prod)" : " (dev)") +
+                        " " + BuildConfig.GIT_HASH
         );
 
         setMemorySummary();
