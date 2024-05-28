@@ -7,6 +7,7 @@ The APKs support different SDK levels due to restrictions of publishing via the 
 
 | Version | Date        | MinSDK          | TargetSDK
 | ------- | ----------- | --------------- | ---------------
+| 1.0.8   | 28 May 2024 | 14 (Android 4)  | 33 (Android 13)
 | 1.0.7   | 28 Sep 2023 | 14 (Android 4)  | 33 (Android 13)
 | 1.0.6   | 11 Apr 2021 | 14 (Android 4)  | 30 (Android 11)
 | 1.0.5   | 23 May 2019 | 14 (Android 4)  | 26 (Android 8)
@@ -28,8 +29,15 @@ adb install -r rameater-release-1.0.7-4abdc86.apk
 
 Major changes for each version
 
+### v1.0.8 - 28 May 2024
+
+- 20 Services
+- Ask for Notification permission on ANdroid 13+
+- Updated help text
+
 ### v1.0.7 - 28 Sep 2023
 
+- 20 Services
 - Recompiled for SDK 33
 - Minor fix for services list UI (thanks Oliver)
 
