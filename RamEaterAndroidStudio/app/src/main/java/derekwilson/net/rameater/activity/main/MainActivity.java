@@ -3,6 +3,7 @@ package derekwilson.net.rameater.activity.main;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -43,6 +44,8 @@ public class MainActivity extends BaseActivity
     private ListView lvServices;
     private RamEater application;
 
+	private IPermissionsHelper permissionsHelper;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
@@ -63,6 +66,34 @@ public class MainActivity extends BaseActivity
         application = (RamEater)getApplication();
         adapter = new ServiceArrayAdapter(this,application.getAllServiceConfigs());
         lvServices.setAdapter(adapter);
+
+		// inject
+		permissionsHelper = new PermissionsHelper();
+		if (!permissionsHelper.hasPushNotificationPermission(this)) {
+			permissionsHelper.requestPushNotificationPermission(this);
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		switch (requestCode) {
+			case PermissionsHelper.MY_PERMISSIONS_REQUEST_NOTIFICATION:
+			{
+				// If request is cancelled, the result arrays are empty.
+				if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					// permission granted
+					if (permissionsHelper.hasPushNotificationPermission(this)) {
+						RamEater.logMessage("MainActivity notification permission granted");
+					}
+				} else {
+					// permission denied
+					RamEater.logMessage("MainActivity notification permission denied");
+					Toast.makeText(this, R.string.notification_permission_denied, Toast.LENGTH_SHORT).show();
+				}
+				return;
+			}
+		}
 	}
 
 	@Override
@@ -94,7 +125,11 @@ public class MainActivity extends BaseActivity
 		        return true;
 			case R.id.action_start_all:
 				application.startAllServices();
-				Toast.makeText(this, R.string.all_started, Toast.LENGTH_SHORT).show();
+				if (permissionsHelper.hasPushNotificationPermission(this)) {
+					Toast.makeText(this, R.string.all_started, Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(this, R.string.notification_permission_denied, Toast.LENGTH_SHORT).show();
+				}
 				return true;
             case R.id.action_stop_all:
                 application.stopAllServices();
@@ -174,6 +209,9 @@ public class MainActivity extends BaseActivity
 							Toast.makeText(getContext(), R.string.service_not_started, Toast.LENGTH_SHORT).show();
 						} else {
 							RamEater.logMessage("Started: " + name.flattenToString());
+							if (!permissionsHelper.hasPushNotificationPermission(getContext())) {
+								Toast.makeText(getContext(), R.string.notification_permission_denied, Toast.LENGTH_SHORT).show();
+							}
 						}
 					} catch (SecurityException ex) {
                 		RamEater.logError("permission denied", ex);

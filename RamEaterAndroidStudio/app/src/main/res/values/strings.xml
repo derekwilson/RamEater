@@ -46,4 +46,10 @@
     <string name="pref_key_version">prefs_version</string>
     <string name="pref_key_max_memory_mb">prefs_max_memory_mb</string>
 
+    <string name="ok_cancel_ok">OK</string>
+    <string name="ok_cancel_cancel">Cancel</string>
+    <string name="notification_permission_request_title">Notification permission needed</string>
+    <string name="notification_permission_request_body">RamEater needs the notification permission, please accept to display notifications when the memory eater services are running.</string>
+    <string name="notification_permission_denied">Cannot display the notifications for the services but they will still run.</string>
+
 </resources>

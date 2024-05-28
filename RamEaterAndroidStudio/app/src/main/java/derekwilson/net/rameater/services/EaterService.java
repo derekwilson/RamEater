@@ -199,6 +199,7 @@ public abstract class EaterService extends Service {
 				.setContentTitle(getString(R.string.app_name) + " " + getServiceName())
 				.setContentText(message)
 				.setSmallIcon(R.mipmap.ic_launcher)
+				.setOngoing(true)
 				.setContentIntent(contentIntent);
 
 
