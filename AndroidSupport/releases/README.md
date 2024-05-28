@@ -32,7 +32,7 @@ Major changes for each version
 ### v1.0.8 - 28 May 2024
 
 - 20 Services
-- Ask for Notification permission on ANdroid 13+
+- Ask for Notification permission on Android 13+
 - Updated help text
 
 ### v1.0.7 - 28 Sep 2023
