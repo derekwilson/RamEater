@@ -26,10 +26,15 @@
 <h3>Source code</h3>
 <p>The <a href="https://github.com/derekwilson/RamEater">source code</a> for RamEater is available on Github.</p>
 <h3>Prebuild APKs</h3>
-<p>There are <a href="https://github.com/derekwilson/RamEater/blob/master/AndroidSupport/releases/README.md">prebuild APKs</a> available in Github if you cannot get older versions from Google Play Store. Details are in the <a href="https://github.com/derekwilson/RamEater/blob/master/README.md">readme</a></p>
+<p>There are <a href="https://github.com/derekwilson/RamEater/blob/master/AndroidSupport/releases/README.md">prebuild APKs</a> available in Github if you cannot get the APK from Google Play Store. Details are in the <a href="https://github.com/derekwilson/RamEater/blob/master/README.md">readme</a></p>
+<p>It is also available from the <a href="https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/">Amazon App Store</a>.</p>
 <h3>Android 2</h3>
 <p>In Android versions earlier than Android 3 it is not possible to automatically detect the maximum amount of memory to allocate, you will need to select the amount of memory each service will allocate in the settings.</p>
 <h3>Android 6+</h3>
 <p>From Android 6 the running apps are not included in the Apps area of Settings. So from Android 6 when you select Goto Running Apps you will go to the Developer Options where the <b>Running Services</b> are now.</p>
 <h3>Android 8.1+</h3>
 <p>From Android 8.1 Developer Options contains a new item called <b>Memory</b> that displays the average amount of memory used by apps over a number of hours. This is not particularly useful for seeing the memory allocated to each RamEater service in real time, you should select <b>Running Services</b> to see the memory allocation in realtime.</p>
+<h3>Android 13+</h3>
+<p>From Android 13 apps need to request permission to show a notification, RamEater will request this permission on Android 13+. If the permission is not granted then RamEater will still work and create the services that consume memory however there will be no notification present to indicate it is running. You can still see the services in <b>Running Services</b> but its easier if you allow the notification permission.</p>
+<h3>Android 14+</h3>
+<p> The Google Play Store target API requirement will mean that I <b>must</b> target Android 14 in the next release. Apps that target Android 14+ have additional requirements from the Google Play Store, I will need to justify being able to start a service and if that is not acceptable to the google-bot then RamEater will be removed from the store. In that event you will need to either get it from the <a href="https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/">Amazon App Store</a> or side-load using <a href="https://github.com/derekwilson/RamEater/blob/master/AndroidSupport/releases/README.md">prebuild APKs</a></p>
