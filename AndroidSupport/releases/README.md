@@ -1,5 +1,7 @@
 # RamEater Release Archive
-This is the release archive for RamEater. If you cannot get an APK from google you can side-load it from here. It is also available from the [Amazon App Store](https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/) 
+This is the release archive for RamEater. If you cannot get an APK from google you can side-load it from here. 
+
+It is also available from the [Amazon App Store](https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/) and for [sideloading using Obtainium](https://derekwilson.net/static/obtainium.html)
 
 ## APKs
 
