@@ -25,7 +25,17 @@ import derekwilson.net.rameater.services.Service18;
 import derekwilson.net.rameater.services.Service19;
 import derekwilson.net.rameater.services.Service2;
 import derekwilson.net.rameater.services.Service20;
+import derekwilson.net.rameater.services.Service21;
+import derekwilson.net.rameater.services.Service22;
+import derekwilson.net.rameater.services.Service23;
+import derekwilson.net.rameater.services.Service24;
+import derekwilson.net.rameater.services.Service25;
+import derekwilson.net.rameater.services.Service26;
+import derekwilson.net.rameater.services.Service27;
+import derekwilson.net.rameater.services.Service28;
+import derekwilson.net.rameater.services.Service29;
 import derekwilson.net.rameater.services.Service3;
+import derekwilson.net.rameater.services.Service30;
 import derekwilson.net.rameater.services.Service4;
 import derekwilson.net.rameater.services.Service5;
 import derekwilson.net.rameater.services.Service6;
@@ -35,7 +45,7 @@ import derekwilson.net.rameater.services.Service9;
 import derekwilson.net.rameater.services.ServiceConfig;
 
 public class RamEater extends Application {
-    private final int numberOfServices = 20;
+    private final int numberOfServices = 30;
     private List<ServiceConfig> services;
 
     @Override
@@ -74,6 +84,16 @@ public class RamEater extends Application {
         services.get(17).ServiceClass = Service18.class;
         services.get(18).ServiceClass = Service19.class;
         services.get(19).ServiceClass = Service20.class;
+        services.get(20).ServiceClass = Service21.class;
+        services.get(21).ServiceClass = Service22.class;
+        services.get(22).ServiceClass = Service23.class;
+        services.get(23).ServiceClass = Service24.class;
+        services.get(24).ServiceClass = Service25.class;
+        services.get(25).ServiceClass = Service26.class;
+        services.get(26).ServiceClass = Service27.class;
+        services.get(27).ServiceClass = Service28.class;
+        services.get(28).ServiceClass = Service29.class;
+        services.get(29).ServiceClass = Service30.class;
 
         for (ServiceConfig config : services){
             config.StartIntent = new Intent(this, config.ServiceClass);

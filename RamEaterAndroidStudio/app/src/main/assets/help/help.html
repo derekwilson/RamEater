@@ -1,8 +1,9 @@
 <h3>Warning</h3>
 <p>RamEater is a memory stress tool for Android phones. Its designed to stress Android phones by allocating almost all the available internal memory to force other applications to be killed and then restored. It is intended to be used by developers and testers to be able to recreate low memory scenarios so that they can develop and test applications in these scenarios.</p>
 <p><b>Please do not install this app unless you want to be able to trigger these low memory scenarios. Also note that phones will tend to run very slowly when the internal memory come under this pressure.</b></p>
-<h3>Intro</h3>
+<h3>Introduction</h3>
 <p>Android restricts the memory any one process can use. RamEater can start a number of services each one in its own process to allocate enough memory to exhaust all the memory in your phone. Because the memory is in a service Android will kill off other foreground tasks before it kills off RamEater services. Each service adds a notification icon to show how much memory has been allocated, these notifications will disappear if the OS does kill one of the services.  Each service will attempt to allocate the maximum amount of memory allowed, but see notes below for Android 2.</p>
+<p>Use the option to <b>Start all Services</b> with caution as starting all the services with each one allocating memory can cause the app to crash or even crash the OS. Its probably better to experiment by starting each service one by one until you get a feel for the number of services needed.</p>
 <h3>Usage</h3>
 <p>
 &#149; Download and install RamEater<br>
@@ -27,7 +28,7 @@
 <p>The <a href="https://github.com/derekwilson/RamEater">source code</a> for RamEater is available on Github.</p>
 <h3>Prebuild APKs</h3>
 <p>There are <a href="https://github.com/derekwilson/RamEater/blob/master/AndroidSupport/releases/README.md">prebuild APKs</a> available in Github if you cannot get the APK from Google Play Store. Details are in the <a href="https://github.com/derekwilson/RamEater/blob/master/README.md">readme</a></p>
-<p>It is also available from the <a href="https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/">Amazon App Store</a>.</p>
+<p>You can install <a href="https://derekwilson.net/static/obtainium.html">any of my apps</a> using Obtainium without an app store.</p>
 <h3>Android 2</h3>
 <p>In Android versions earlier than Android 3 it is not possible to automatically detect the maximum amount of memory to allocate, you will need to select the amount of memory each service will allocate in the settings.</p>
 <h3>Android 6+</h3>
@@ -37,4 +38,4 @@
 <h3>Android 13+</h3>
 <p>From Android 13 apps need to request permission to show a notification, RamEater will request this permission on Android 13+. If the permission is not granted then RamEater will still work and create the services that consume memory however there will be no notification present to indicate it is running. You can still see the services in <b>Running Services</b> but its easier if you allow the notification permission.</p>
 <h3>Android 14+</h3>
-<p> The Google Play Store target API requirement will mean that I <b>must</b> target Android 14 in the next release. Apps that target Android 14+ have additional requirements from the Google Play Store, I will need to justify being able to start a service and if that is not acceptable to the google-bot then RamEater will be removed from the store. In that event you will need to either get it from the <a href="https://www.amazon.com/Derek-Wilson-RamEater/dp/B0B1LBJYY1/">Amazon App Store</a> or side-load using <a href="https://github.com/derekwilson/RamEater/blob/master/AndroidSupport/releases/README.md">prebuild APKs</a></p>
+<p> The Google Play Store target API requirement will mean that I <b>must</b> target Android 14 in the next release. Apps that target Android 14+ have additional requirements from the Google Play Store, I will need to justify being able to start a service and if that is not acceptable to the google-bot then RamEater will be removed from the store.</p>

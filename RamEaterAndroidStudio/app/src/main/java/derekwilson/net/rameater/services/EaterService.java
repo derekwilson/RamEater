@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Debug;
 import android.os.IBinder;
@@ -44,7 +45,11 @@ public abstract class EaterService extends Service {
 		logMemoryUsage("onStartCommand - start");
 
 		try {
-			startForeground(getServiceId(), notificationBuilder.build());
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+				startForeground(getServiceId(), notificationBuilder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROCESSING);
+			} else {
+				startForeground(getServiceId(), notificationBuilder.build());
+			}
 		} catch (SecurityException ex) {
 			logError("Permission denied", ex);
 			Toast.makeText(this, R.string.service_not_started_permission, Toast.LENGTH_SHORT).show();
@@ -89,6 +94,12 @@ public abstract class EaterService extends Service {
 	public boolean stopService(Intent name) {
 		logMessage("stopService Method is called");
 		return super.stopService(name);
+	}
+
+	@Override
+	public void onTimeout(int startId, int fgsType) {
+		logMessage("onTimeout " + startId + ": " + fgsType);
+		stopSelf();
 	}
 
 	private void eatAllMemory() {

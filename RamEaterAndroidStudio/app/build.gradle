@@ -11,14 +11,14 @@ def getGitHash = { ->
 
 android {
     namespace 'derekwilson.net.rameater'
-    compileSdk 33
+    compileSdk 35
 
     defaultConfig {
         applicationId "derekwilson.net.rameater"
         minSdkVersion 14
-        targetSdkVersion 33
-        versionCode 12
-        versionName "1.0.8"
+        targetSdkVersion 35
+        versionCode 13
+        versionName "1.0.9"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
 

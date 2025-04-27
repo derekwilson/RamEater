@@ -8,3 +8,4 @@ public class Service20 extends EaterService {
         return R.string.service_20;
     }
 }
+

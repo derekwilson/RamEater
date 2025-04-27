@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" />
 
     <application
         android:allowBackup="true"
@@ -42,122 +43,212 @@
         <service
             android:description="@string/service_1"
             android:label="@string/service_1"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service1"
             android:process=":sp1">
         </service>
         <service
             android:description="@string/service_2"
             android:label="@string/service_2"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service2"
             android:process=":sp2">
         </service>
         <service
             android:description="@string/service_3"
             android:label="@string/service_3"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service3"
             android:process=":sp3">
         </service>
         <service
             android:description="@string/service_4"
             android:label="@string/service_4"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service4"
             android:process=":sp4">
         </service>
         <service
             android:description="@string/service_5"
             android:label="@string/service_5"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service5"
             android:process=":sp5">
         </service>
         <service
             android:description="@string/service_6"
             android:label="@string/service_6"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service6"
             android:process=":sp6">
         </service>
         <service
             android:description="@string/service_7"
             android:label="@string/service_7"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service7"
             android:process=":sp7">
         </service>
         <service
             android:description="@string/service_8"
             android:label="@string/service_8"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service8"
             android:process=":sp8">
         </service>
         <service
             android:description="@string/service_9"
             android:label="@string/service_9"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service9"
             android:process=":sp9">
         </service>
         <service
             android:description="@string/service_10"
             android:label="@string/service_10"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service10"
             android:process=":sp10">
         </service>
         <service
             android:description="@string/service_11"
             android:label="@string/service_11"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service11"
             android:process=":sp11">
         </service>
         <service
             android:description="@string/service_12"
             android:label="@string/service_12"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service12"
             android:process=":sp12">
         </service>
         <service
             android:description="@string/service_13"
             android:label="@string/service_13"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service13"
             android:process=":sp13">
         </service>
         <service
             android:description="@string/service_14"
             android:label="@string/service_14"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service14"
             android:process=":sp14">
         </service>
         <service
             android:description="@string/service_15"
             android:label="@string/service_15"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service15"
             android:process=":sp15">
         </service>
         <service
             android:description="@string/service_16"
             android:label="@string/service_16"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service16"
             android:process=":sp16">
         </service>
         <service
             android:description="@string/service_17"
             android:label="@string/service_17"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service17"
             android:process=":sp17">
         </service>
         <service
             android:description="@string/service_18"
             android:label="@string/service_18"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service18"
             android:process=":sp18">
         </service>
         <service
             android:description="@string/service_19"
             android:label="@string/service_19"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service19"
             android:process=":sp19">
         </service>
         <service
             android:description="@string/service_20"
             android:label="@string/service_20"
+            android:foregroundServiceType="mediaProcessing"
             android:name=".services.Service20"
             android:process=":sp20">
+        </service>
+        <service
+            android:description="@string/service_21"
+            android:label="@string/service_21"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service21"
+            android:process=":sp21">
+        </service>
+        <service
+            android:description="@string/service_22"
+            android:label="@string/service_22"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service22"
+            android:process=":sp22">
+        </service>
+        <service
+            android:description="@string/service_23"
+            android:label="@string/service_23"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service23"
+            android:process=":sp23">
+        </service>
+        <service
+            android:description="@string/service_24"
+            android:label="@string/service_24"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service24"
+            android:process=":sp24">
+        </service>
+        <service
+            android:description="@string/service_25"
+            android:label="@string/service_25"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service25"
+            android:process=":sp25">
+        </service>
+        <service
+            android:description="@string/service_26"
+            android:label="@string/service_26"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service26"
+            android:process=":sp26">
+        </service>
+        <service
+            android:description="@string/service_27"
+            android:label="@string/service_27"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service27"
+            android:process=":sp27">
+        </service>
+        <service
+            android:description="@string/service_28"
+            android:label="@string/service_28"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service28"
+            android:process=":sp28">
+        </service>
+        <service
+            android:description="@string/service_29"
+            android:label="@string/service_29"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service29"
+            android:process=":sp29">
+        </service>
+        <service
+            android:description="@string/service_30"
+            android:label="@string/service_30"
+            android:foregroundServiceType="mediaProcessing"
+            android:name=".services.Service30"
+            android:process=":sp30">
         </service>
     </application>
 

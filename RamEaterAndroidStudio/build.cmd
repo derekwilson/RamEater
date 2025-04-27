@@ -1,3 +1,4 @@
+del .\app\build\outputs\apk\release\rameater-*.apk
 echo %JAVA_HOME%
 pause
 call gradlew clean assembleRelease
