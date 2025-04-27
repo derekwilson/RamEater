@@ -42,6 +42,16 @@
     <string name="service_18">Service 18</string>
     <string name="service_19">Service 19</string>
     <string name="service_20">Service 20</string>
+    <string name="service_21">Service 21</string>
+    <string name="service_22">Service 22</string>
+    <string name="service_23">Service 23</string>
+    <string name="service_24">Service 24</string>
+    <string name="service_25">Service 25</string>
+    <string name="service_26">Service 26</string>
+    <string name="service_27">Service 27</string>
+    <string name="service_28">Service 28</string>
+    <string name="service_29">Service 29</string>
+    <string name="service_30">Service 30</string>
 
     <string name="pref_key_version">prefs_version</string>
     <string name="pref_key_max_memory_mb">prefs_max_memory_mb</string>
